@@ -163,7 +163,7 @@ const createError = (errMsg: string):never =>{
 const infinite =()=>{
     let i: number = 1
     while (true){
-        i++
+        i++   
         if (i>100) break
     }
 }
@@ -179,4 +179,4 @@ const numberOrString = (value: number | string): string=>{
     if (typeof value === 'string') return 'string'
     if(isNumber(value)) return 'number'
     return createError('This should never happen!')
-}
+} 
