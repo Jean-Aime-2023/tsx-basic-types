@@ -1,36 +1,69 @@
 "use strict";
-let stringArr = ['one', 'hey', 'Dave'];
-let guitars = ['Strat', 'Les Paul', 5150];
-let mixedData = ['EVH', 1984, true];
-stringArr[0] = 'John';
-stringArr.push('hey');
-guitars[0] = 1984;
-guitars.unshift('Jim');
-let test = [];
-let bands = [];
-bands.push('Vna Helen');
-// Tuple
-let myTuple = ['Deve', 42, true];
-let mixed = ['John', 1, false];
-myTuple[1] = 42;
-//objects
-let myObj;
-myObj = [];
-console.log(typeof myObj);
-myObj = bands;
-myObj = {};
-const exampleObj = {
-    prop1: 'Dave',
-    prop2: true,
+// ---------- Objects,Arrays,Tuples & Enums--------- 
+// literal types
+let myName;
+// let username: 'Dave' | 'John | 'Amy'
+// username = 'Amy'  -> Gave an error
+// functions
+const add = (a, b) => {
+    return a + b;
 };
-exampleObj.prop1 = 'John';
-let evh = {
-    name: 'Eddie',
-    active: false,
-    albums: [1984, 5150, 'OU812'],
+const logMsg = (message) => {
+    console.log(message);
 };
-let jp = {
-    name: 'Jimmy',
-    albums: ['I', 'II', 'IV'],
+logMsg('Hello!');
+logMsg(add(2, 3));
+let subtract = function (c, d) {
+    return c - d;
 };
-const greetGuitarist = (guitarist) => ;
+// interface mathFunction {
+//     (a: number, b: number): number
+// } 
+let multiply = function (c, d) {
+    return c * d;
+};
+logMsg(multiply(2, 3));
+// optional parameters
+const addAll = (a, b, c) => {
+    if (typeof c !== 'undefined') {
+        return a + b + c;
+    }
+    return a + b;
+};
+// default param value
+const sumAll = (a = 10, b, c = 2) => {
+    return a + b + c;
+};
+logMsg(addAll(2, 3, 2));
+logMsg(addAll(2, 3));
+logMsg(sumAll(2, 3));
+logMsg(sumAll(undefined, 3));
+// Rest parameters
+const total = (a, ...nums) => {
+    return a + nums.reduce((prev, curr) => prev + curr);
+};
+logMsg(total(1, 2, 3, 4));
+const createError = (errMsg) => {
+    throw new Error(errMsg);
+};
+const infinite = () => {
+    let i = 1;
+    while (true) {
+        i++;
+        if (i > 100)
+            break;
+    }
+};
+//custom type guard
+const isNumber = (value) => {
+    return typeof value === "number"
+        ? true : false;
+};
+//use of the never type
+const numberOrString = (value) => {
+    if (typeof value === 'string')
+        return 'string';
+    if (isNumber(value))
+        return 'number';
+    return createError('This should never happen!');
+};
