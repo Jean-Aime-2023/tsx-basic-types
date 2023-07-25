@@ -79,98 +79,136 @@
 
 //type Aliases
 //aliases help codes dry(don't repeat your self)
-type stringOrNumber = string | number;
 
-type stringOrNumberArray = (string | number)[];
+// type stringOrNumber = string | number;
 
-interface Guitarist {
-  name?: string;
-  active: boolean;
-  albums: stringOrNumberArray;
-}
+// type stringOrNumberArray = (string | number)[];
 
-type UserId = stringOrNumber;
-
-// literal types
-let myName: "Dave";
-
-// let username: 'Dave' | 'John | 'Amy'
-// username = 'Amy'  -> Gave an error
-
-// functions
-const add = (a: number, b: number): number => {
-  return a + b;
-};
-
-const logMsg = (message: any): void => {
-  console.log(message);
-};
-
-logMsg("Hello!");
-logMsg(add(2, 3));
-
-let subtract = function (c: number, d: number): number {
-  return c - d;
-};
-
-type mathFunction = (a: number, b: number) => number;
-// interface mathFunction {
-//     (a: number, b: number): number
+// interface Guitarist {
+//   name?: string;
+//   active: boolean;
+//   albums: stringOrNumberArray;
 // }
 
-let multiply: mathFunction = function (c, d) {
-  return c * d;
-};
+// type UserId = stringOrNumber;
 
-logMsg(multiply(2, 3));
+// // literal types
+// let myName: "Dave";
 
-// optional parameters
+// // let username: 'Dave' | 'John | 'Amy'
+// // username = 'Amy'  -> Gave an error
 
-const addAll = (a: number, b: number, c?: number): number => {
-  if (typeof c !== "undefined") {
-    return a + b + c;
-  }
-  return a + b;
-};
+// // functions
+// const add = (a: number, b: number): number => {
+//   return a + b;
+// };
 
-// default param value
-const sumAll = (a: number = 10, b: number, c: number = 2): number => {
-  return a + b + c;
-};
+// const logMsg = (message: any): void => {
+//   console.log(message);
+// };
 
-logMsg(addAll(2, 3, 2));
-logMsg(addAll(2, 3));
-logMsg(sumAll(2, 3));
-logMsg(sumAll(undefined, 3));
+// logMsg("Hello!");
+// logMsg(add(2, 3));
 
-// Rest parameters
+// let subtract = function (c: number, d: number): number {
+//   return c - d;
+// };
 
-const total = (a: number, ...nums: number[]): number => {
-  return a + nums.reduce((prev, curr) => prev + curr);
-};
+// type mathFunction = (a: number, b: number) => number;
+// // interface mathFunction {
+// //     (a: number, b: number): number
+// // }
 
-logMsg(total(1, 2, 3, 4));
+// let multiply: mathFunction = function (c, d) {
+//   return c * d;
+// };
 
-const createError = (errMsg: string): never => {
-  throw new Error(errMsg);
-};
+// logMsg(multiply(2, 3));
 
-const infinite = () => {
-  let i: number = 1;
-  while (true) {
-    i++;
-    if (i > 100) break;
-  }
-};
+// // optional parameters
 
-//custom type guard
-const isNumber = (value: any): boolean => {
-  return typeof value === "number" ? true : false;
-};
+// const addAll = (a: number, b: number, c?: number): number => {
+//   if (typeof c !== "undefined") {
+//     return a + b + c;
+//   }
+//   return a + b;
+// };
 
-//use of the never type
-const numberOrString = (value: number | string): string => {
-  if (typeof value === "string") return "string";
-  if (isNumber(value)) return "number";
-  return createError("This should never happen!");
-};
+// // default param value
+// const sumAll = (a: number = 10, b: number, c: number = 2): number => {
+//   return a + b + c;
+// };
+
+// logMsg(addAll(2, 3, 2));
+// logMsg(addAll(2, 3));
+// logMsg(sumAll(2, 3));
+// logMsg(sumAll(undefined, 3));
+
+// // Rest parameters
+
+// const total = (a: number, ...nums: number[]): number => {
+//   return a + nums.reduce((prev, curr) => prev + curr);
+// };
+
+// logMsg(total(1, 2, 3, 4));
+
+// const createError = (errMsg: string): never => {
+//   throw new Error(errMsg);
+// };
+
+// const infinite = () => {
+//   let i: number = 1;
+//   while (true) {
+//     i++;
+//     if (i > 100) break;
+//   }
+// };
+
+// //custom type guard
+// const isNumber = (value: any): boolean => {
+//   return typeof value === "number" ? true : false;
+// };
+
+// //use of the never type
+// const numberOrString = (value: number | string): string => {
+//   if (typeof value === "string") return "string";
+//   if (isNumber(value)) return "number";
+//   return createError("This should never happen!");
+// };
+
+
+
+// ---------------Tyoe assertions & Type Casting-----------
+
+type One = string
+type Two = string | number
+type Three = 'hello'
+
+// convert to more or less specific
+let a: One = 'hello'
+let b = a as Two // less specific
+let c = a as Three // more specific
+
+let d = <One>'world' 
+let e = <string | number>'world' 
+
+const addOrConcat =  (a:number, b:number, c:'add' | 'concat'): number | string =>{
+   if(c === 'add') return a + b
+   return '' + a + b
+}
+
+let myVal: string = addOrConcat(2,2,'concat') as string
+
+// Be careful! TS sees no problem - but a string is returned
+let nextVal:number = addOrConcat(2,2,'concat') as number
+
+// 10 as string -> gives an error
+(10 as unknown) as string
+
+// the DOM
+const img = document.querySelector('img')!
+const myImg = document.getElementById('#img') as HTMLImageElement
+const nextImg = <HTMLImageElement>document.getElementById('#img')
+
+img.src
+myImg.src
