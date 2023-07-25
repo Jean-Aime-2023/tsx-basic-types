@@ -1,214 +1,122 @@
-// ---------- Objects,Arrays,Tuples & Enums---------
+class Coder {
 
-// let stringArr = ['one','hey','Dave']
+  secondLang!: string
 
-// let guitars = ['Strat','Les Paul',5150]
+  constructor(
+      public readonly name: string,
+      public music: string,
+      private age: number,
+      protected lang: string = 'Typescript'
+  ) {
+      this.name = name
+      this.music = music
+      this.age = age
+      this.lang = lang
+  }
 
-// let mixedData = ['EVH',1984,true]
-
-// stringArr[0] = 'John'
-// stringArr.push('hey')
-
-// guitars[0] = 1984
-// guitars.unshift('Jim')
-
-// let test = []
-// let bands: string[] = []
-// bands.push('Vna Helen')
-
-// // Tuple
-// let myTuple: [string,number,boolean] = ['Deve',42,true]
-
-// let mixed = ['John',1,false]
-
-// myTuple[1] = 42
-
-// //objects
-// let myObj: object
-// myObj = []
-// console.log(typeof myObj);
-// myObj = bands
-// myObj = {}
-
-// const exampleObj = {
-//     prop1: 'Dave',
-//     prop2: true,
-// }
-
-// exampleObj.prop1 = 'John'
-
-// interface Guitarist {
-//     name?: string,
-//     active: boolean,
-//     albums: (string | number)[]
-// }
-
-// let evh: Guitarist = {
-//     name: 'Eddie',
-//     active: false,
-//     albums: [1984,5150,'OU812'],
-// }
-
-// let jp: Guitarist = {
-//     active: true,
-//     albums: ['I','II','IV'],
-// }
-
-// const greetGuitarist = (guitarist: Guitarist) => {
-//     if(guitarist.name){
-//         return `Hello ${guitarist.name.toUpperCase()}!`
-//     }
-//     return 'Hello!'
-// }
-
-// console.log(greetGuitarist(jp));
-
-// //Enums
-
-// enum Grade {
-//     U = 1,
-//     D,
-//     C,
-//     B,
-//     A,
-// }
-
-// console.log(Grade.U);
-
-//------------- typeScript functions ------------
-
-//type Aliases
-//aliases help codes dry(don't repeat your self)
-
-// type stringOrNumber = string | number;
-
-// type stringOrNumberArray = (string | number)[];
-
-// interface Guitarist {
-//   name?: string;
-//   active: boolean;
-//   albums: stringOrNumberArray;
-// }
-
-// type UserId = stringOrNumber;
-
-// // literal types
-// let myName: "Dave";
-
-// // let username: 'Dave' | 'John | 'Amy'
-// // username = 'Amy'  -> Gave an error
-
-// // functions
-// const add = (a: number, b: number): number => {
-//   return a + b;
-// };
-
-// const logMsg = (message: any): void => {
-//   console.log(message);
-// };
-
-// logMsg("Hello!");
-// logMsg(add(2, 3));
-
-// let subtract = function (c: number, d: number): number {
-//   return c - d;
-// };
-
-// type mathFunction = (a: number, b: number) => number;
-// // interface mathFunction {
-// //     (a: number, b: number): number
-// // }
-
-// let multiply: mathFunction = function (c, d) {
-//   return c * d;
-// };
-
-// logMsg(multiply(2, 3));
-
-// // optional parameters
-
-// const addAll = (a: number, b: number, c?: number): number => {
-//   if (typeof c !== "undefined") {
-//     return a + b + c;
-//   }
-//   return a + b;
-// };
-
-// // default param value
-// const sumAll = (a: number = 10, b: number, c: number = 2): number => {
-//   return a + b + c;
-// };
-
-// logMsg(addAll(2, 3, 2));
-// logMsg(addAll(2, 3));
-// logMsg(sumAll(2, 3));
-// logMsg(sumAll(undefined, 3));
-
-// // Rest parameters
-
-// const total = (a: number, ...nums: number[]): number => {
-//   return a + nums.reduce((prev, curr) => prev + curr);
-// };
-
-// logMsg(total(1, 2, 3, 4));
-
-// const createError = (errMsg: string): never => {
-//   throw new Error(errMsg);
-// };
-
-// const infinite = () => {
-//   let i: number = 1;
-//   while (true) {
-//     i++;
-//     if (i > 100) break;
-//   }
-// };
-
-// //custom type guard
-// const isNumber = (value: any): boolean => {
-//   return typeof value === "number" ? true : false;
-// };
-
-// //use of the never type
-// const numberOrString = (value: number | string): string => {
-//   if (typeof value === "string") return "string";
-//   if (isNumber(value)) return "number";
-//   return createError("This should never happen!");
-// };
-
-
-
-// ---------------Tyoe assertions & Type Casting-----------
-
-type One = string
-type Two = string | number
-type Three = 'hello'
-
-// convert to more or less specific
-let a: One = 'hello'
-let b = a as Two // less specific
-let c = a as Three // more specific
-
-let d = <One>'world' 
-let e = <string | number>'world' 
-
-const addOrConcat =  (a:number, b:number, c:'add' | 'concat'): number | string =>{
-   if(c === 'add') return a + b
-   return '' + a + b
+  public getAge() {
+      return `Hello, I'm ${this.age}`
+  }
 }
 
-let myVal: string = addOrConcat(2,2,'concat') as string
+const Dave = new Coder('Dave', 'Rock', 42)
+console.log(Dave.getAge())
+// console.log(Dave.age)
+// console.log(Dave.lang)
 
-// Be careful! TS sees no problem - but a string is returned
-let nextVal:number = addOrConcat(2,2,'concat') as number
+class WebDev extends Coder {
+  constructor(
+      public computer: string,
+      name: string,
+      music: string,
+      age: number,
+  ) {
+      super(name, music, age)
+      this.computer = computer
+  }
 
-// 10 as string -> gives an error
-(10 as unknown) as string
+  public getLang() {
+      return `I write ${this.lang}`
+  }
+}
 
-// the DOM
-const img = document.querySelector('img')!
-const myImg = document.getElementById('#img') as HTMLImageElement
-const nextImg = <HTMLImageElement>document.getElementById('#img')
+const Sara = new WebDev('Mac', 'Sara', 'Lofi', 25)
+console.log(Sara.getLang())
+// console.log(Sara.age)
+// console.log(Sara.lang)
+/////////////////////////////////////
 
-img.src
-myImg.src
+interface Musician {
+  name: string,
+  instrument: string,
+  play(action: string): string
+}
+
+class Guitarist implements Musician {
+  name: string
+  instrument: string
+
+  constructor(name: string, instrument: string) {
+      this.name = name
+      this.instrument = instrument
+  }
+
+  play(action: string) {
+      return `${this.name} ${action} the ${this.instrument}`
+  }
+}
+
+const Page = new Guitarist('Jimmy', 'guitar')
+console.log(Page.play('strums'))
+//////////////////////////////////////
+
+class Peeps {
+  static count: number = 0
+
+  static getCount(): number {
+      return Peeps.count
+  }
+
+  public id: number
+
+  constructor(public name: string) {
+      this.name = name
+      this.id = ++Peeps.count
+  }
+}
+
+const John = new Peeps('John')
+const Steve = new Peeps('Steve')
+const Amy = new Peeps('Amy')
+
+console.log(Amy.id)
+console.log(Steve.id)
+console.log(John.id)
+console.log(Peeps.count)
+//////////////////////////////////
+
+class Bands {
+  private dataState: string[]
+
+  constructor() {
+      this.dataState = []
+  }
+
+  public get data(): string[] {
+      return this.dataState
+  }
+
+  public set data(value: string[]) {
+      if (Array.isArray(value) && value.every(el => typeof el === 'string')) {
+          this.dataState = value
+          return
+      } else throw new Error('Param is not an array of strings')
+  }
+}
+
+const MyBands = new Bands()
+MyBands.data = ['Neil Young', 'Led Zep']
+console.log(MyBands.data)
+MyBands.data = [...MyBands.data, 'ZZ Top']
+console.log(MyBands.data)
+MyBands.data = ['Van Halen', 5150] // must be string data
